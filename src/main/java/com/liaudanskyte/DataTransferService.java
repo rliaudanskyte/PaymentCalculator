@@ -1,11 +1,14 @@
 package com.liaudanskyte;
 
+import org.springframework.stereotype.Service;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
 public class DataTransferService {
 
     static List<Employee> readDataLines() {
@@ -28,7 +31,7 @@ public class DataTransferService {
         }
     }
 
-    static void writeDataLines(List<String> lines) throws IOException {
+    static void writeDataLines(List<Employee> lines) throws IOException {
         var writer = new BufferedWriter(new FileWriter("./src/main/resources/employeeData.csv"));
         lines.forEach(line -> {
             try {

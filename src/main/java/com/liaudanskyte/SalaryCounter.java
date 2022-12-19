@@ -1,64 +1,48 @@
 package com.liaudanskyte;
 
-import java.time.LocalDate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.List;
+
+@Service
 public class SalaryCounter {
-    private LocalDate dateOfLaborcodeChange;
-    private Integer fixedHourlyRateOld = 4;
-    private Integer fixedMonthlyRateOld = 150;
-    private Integer fixedHourlyRateNew;
-    private Integer fixedMonthlyRateNew;
+    private SalaryLaborCodeRates salaryLaborCodeRates;
+    private Company company;
 
     public SalaryCounter(
-            LocalDate dateOfLaborcodeChange,
-            Integer fixedHourlyRateNew,
-            Integer fixedMonthlyRateNew
+            @Autowired SalaryLaborCodeRates salaryLaborCodeRates,
+            @Autowired Company company
     ) {
-        this.dateOfLaborcodeChange = dateOfLaborcodeChange;
-        this.fixedHourlyRateNew = fixedHourlyRateNew;
-        this.fixedMonthlyRateNew = fixedMonthlyRateNew;
+        this.salaryLaborCodeRates = salaryLaborCodeRates;
+        this.company = company;
     }
 
-    public SalaryCounter() {
+    public SalaryCounter(@Autowired SalaryLaborCodeRates salaryLaborCodeRates) {
+        this.salaryLaborCodeRates = salaryLaborCodeRates;
     }
 
-    public LocalDate getDateOfLaborcodeChange() {
-        return dateOfLaborcodeChange;
-    }
-
-    public void setDateOfLaborcodeChange(LocalDate dateOfLaborcodeChange) {
-        this.dateOfLaborcodeChange = dateOfLaborcodeChange;
-    }
-
-    public Integer getFixedHourlyRateOld() {
-        return fixedHourlyRateOld;
-    }
-
-    public void setFixedHourlyRateOld(Integer fixedHourlyRateOld) {
-        this.fixedHourlyRateOld = fixedHourlyRateOld;
-    }
-
-    public Integer getFixedMonthlyRateOld() {
-        return fixedMonthlyRateOld;
-    }
-
-    public void setFixedMonthlyRateOld(Integer fixedMonthlyRateOld) {
-        this.fixedMonthlyRateOld = fixedMonthlyRateOld;
-    }
-
-    public Integer getFixedHourlyRateNew() {
-        return fixedHourlyRateNew;
-    }
-
-    public void setFixedHourlyRateNew(Integer fixedHourlyRateNew) {
-        this.fixedHourlyRateNew = fixedHourlyRateNew;
-    }
-
-    public Integer getFixedMonthlyRateNew() {
-        return fixedMonthlyRateNew;
-    }
-
-    public void setFixedMonthlyRateNew(Integer fixedMonthlyRateNew) {
-        this.fixedMonthlyRateNew = fixedMonthlyRateNew;
+    public Double salaryByWeek(LocalDate dateOfPayment) {
+        Double result;
+        if (dateOfPayment.isBefore(salaryLaborCodeRates.getDateOfLaborCodeChange())) {
+            result = company.getEmployeeList().stream()
+                    .map(Employee::weeklySalary)
+                    .reduce(0.0, Double::sum);
+        } else {
+            result = company.getEmployeeList().stream()
+                    .map(employee -> {
+                        double sum = 0.0;
+                        if (employee.getContractType() == ContractType.FIXED) {
+                            sum = Math.max(employee.getRate(), salaryLaborCodeRates.getFixedMonthlyRateNew());
+                        } else if (employee.getContractType() == ContractType.FLEXIBLE){
+                            EmployeeFlexible employeeFlexible = (EmployeeFlexible) employee;
+                            sum = (double) employeeFlexible.getHoursWorked() * Math.max(employee.getRate(), salaryLaborCodeRates.getFixedHourlyRateNew());
+                        }
+                        return sum;
+                    })
+                    .reduce(0.0, Double::sum);
+        }
+        return result;
     }
 }

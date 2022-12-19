@@ -1,5 +1,8 @@
 package com.liaudanskyte;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class EmployeeFlexible extends Employee{
     private int hoursWorked;
 
