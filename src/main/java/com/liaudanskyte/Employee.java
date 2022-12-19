@@ -5,10 +5,13 @@ public class Employee {
     private ContractType contractType;
     private Integer rate;
 
-    public Employee(String name, ContractType contractType, Integer rate) {
-        this.name = name;
+    public Employee(ContractType contractType, String name, Integer rate) {
         this.contractType = contractType;
+        this.name = name;
         this.rate = rate;
+    }
+
+    public Employee() {
     }
 
     public Double weeklySalary() {
@@ -37,5 +40,10 @@ public class Employee {
 
     public void setRate(Integer rate) {
         this.rate = rate;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s,%s,%d", contractType, name, rate);
     }
 }

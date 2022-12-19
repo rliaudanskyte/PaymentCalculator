@@ -3,13 +3,13 @@ package com.liaudanskyte;
 public class EmployeeFlexible extends Employee{
     private int hoursWorked;
 
-    public EmployeeFlexible(String name, ContractType contractType, Integer rate) {
-        super(name, contractType, rate);
+    public EmployeeFlexible(ContractType contractType, String name, Integer rate) {
+        super(contractType, name, rate);
     }
 
-    public EmployeeFlexible(String name, ContractType contractType, Integer rate, int hoursWorked) {
-        super(name, contractType, rate);
-        this.hoursWorked = hoursWorked;
+    public EmployeeFlexible(ContractType contractType, String name, Integer rate, int hoursWorked) {
+        super(contractType, name, rate);
+        this.hoursWorked = Math.min(hoursWorked, 60);
     }
 
     public int getHoursWorked() {
@@ -17,12 +17,17 @@ public class EmployeeFlexible extends Employee{
     }
 
     public void setHoursWorked(int hoursWorked) {
-        this.hoursWorked = hoursWorked;
+        this.hoursWorked = Math.min(hoursWorked, 60);
     }
 
     @Override
     public Double weeklySalary() {
         var overtime = hoursWorked - 40;
         return (super.getRate() * hoursWorked) + (overtime * super.getRate() * 1.5);
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + String.format(",%s", hoursWorked);
     }
 }
