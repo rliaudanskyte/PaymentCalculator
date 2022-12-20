@@ -24,9 +24,16 @@ public class EmployeeFlexible extends Employee{
     }
 
     @Override
-    public Double weeklySalary() {
+    public Double getWeeklySalary() {
         var overtime = hoursWorked - 40;
-        return (super.getRate() * hoursWorked) + (overtime * super.getRate() * 1.5);
+        return (super.getRate() * hoursWorked) + (overtime * super.getRate() * 0.5);
+    }
+
+    @Override
+    public Double getWeeklySalary(int newRate) {
+        var overtime = hoursWorked - 40;
+        var rateSelected = Math.max(newRate, super.getRate());
+        return (rateSelected * hoursWorked) + (overtime * rateSelected * 0.5);
     }
 
     @Override

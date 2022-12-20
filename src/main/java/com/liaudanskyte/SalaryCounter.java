@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Service
 public class SalaryCounter {
@@ -19,25 +18,25 @@ public class SalaryCounter {
         this.company = company;
     }
 
-    public SalaryCounter(@Autowired SalaryLaborCodeRates salaryLaborCodeRates) {
-        this.salaryLaborCodeRates = salaryLaborCodeRates;
-    }
+//    public SalaryCounter(@Autowired SalaryLaborCodeRates salaryLaborCodeRates) {
+//        this.salaryLaborCodeRates = salaryLaborCodeRates;
+//    }
 
     public Double salaryByWeek(LocalDate dateOfPayment) {
         Double result;
         if (dateOfPayment.isBefore(salaryLaborCodeRates.getDateOfLaborCodeChange())) {
             result = company.getEmployeeList().stream()
-                    .map(Employee::weeklySalary)
+                    .map(Employee::getWeeklySalary)
                     .reduce(0.0, Double::sum);
         } else {
             result = company.getEmployeeList().stream()
                     .map(employee -> {
                         double sum = 0.0;
                         if (employee.getContractType() == ContractType.FIXED) {
-                            sum = Math.max(employee.getRate(), salaryLaborCodeRates.getFixedMonthlyRateNew());
+                            sum = employee.getWeeklySalary(salaryLaborCodeRates.getWeeklyRateNew());
                         } else if (employee.getContractType() == ContractType.FLEXIBLE){
                             EmployeeFlexible employeeFlexible = (EmployeeFlexible) employee;
-                            sum = (double) employeeFlexible.getHoursWorked() * Math.max(employee.getRate(), salaryLaborCodeRates.getFixedHourlyRateNew());
+                            sum = employeeFlexible.getWeeklySalary(salaryLaborCodeRates.getHourlyRateNew());
                         }
                         return sum;
                     })

@@ -7,19 +7,19 @@ import java.time.LocalDate;
 @Component
 public class SalaryLaborCodeRates {
     private LocalDate dateOfLaborCodeChange = LocalDate.of(2023,1,1);
-    private Integer fixedHourlyRateOld = 4;
-    private Integer fixedMonthlyRateOld = 150;
-    private Integer fixedHourlyRateNew = 5;
-    private Integer fixedMonthlyRateNew = 175;
+    private Integer hourlyRateOld = 4;
+    private Integer weeklyRateOld = 150;
+    private Integer hourlyRateNew = 5;
+    private Integer weeklyRateNew = 175;
 
     public SalaryLaborCodeRates(
             LocalDate dateOfLaborcodeChange,
             Integer fixedHourlyRateNew,
-            Integer fixedMonthlyRateNew
+            Integer weeklyRateNew
     ) {
         this.dateOfLaborCodeChange = dateOfLaborcodeChange;
-        this.fixedHourlyRateNew = fixedHourlyRateNew;
-        this.fixedMonthlyRateNew = fixedMonthlyRateNew;
+        this.hourlyRateNew = fixedHourlyRateNew;
+        this.weeklyRateNew = weeklyRateNew;
     }
 
     public SalaryLaborCodeRates() {
@@ -33,35 +33,35 @@ public class SalaryLaborCodeRates {
         this.dateOfLaborCodeChange = dateOfLaborCodeChange;
     }
 
-    public Integer getFixedHourlyRateOld() {
-        return fixedHourlyRateOld;
+    public Integer getHourlyRateOld() {
+        return hourlyRateOld;
     }
 
-    public void setFixedHourlyRateOld(Integer fixedHourlyRateOld) {
-        this.fixedHourlyRateOld = fixedHourlyRateOld;
+    public void setHourlyRateOld(Integer hourlyRateOld) {
+        this.hourlyRateOld = hourlyRateOld;
     }
 
-    public Integer getFixedMonthlyRateOld() {
-        return fixedMonthlyRateOld;
+    public Integer getWeeklyRateOld() {
+        return weeklyRateOld;
     }
 
-    public void setFixedMonthlyRateOld(Integer fixedMonthlyRateOld) {
-        this.fixedMonthlyRateOld = fixedMonthlyRateOld;
+    public void setWeeklyRateOld(Integer weeklyRateOld) {
+        this.weeklyRateOld = weeklyRateOld;
     }
 
-    public Integer getFixedHourlyRateNew() {
-        return fixedHourlyRateNew;
+    public Integer getHourlyRateNew() {
+        return hourlyRateNew;
     }
 
-    public void setFixedHourlyRateNew(Integer fixedHourlyRateNew) {
-        this.fixedHourlyRateNew = fixedHourlyRateNew;
+    public void setHourlyRateNew(Integer hourlyRateNew) {
+        this.hourlyRateNew = hourlyRateNew;
     }
 
-    public Integer getFixedMonthlyRateNew() {
-        return fixedMonthlyRateNew;
+    public Integer getWeeklyRateNew() {
+        return weeklyRateNew;
     }
 
-    public void setFixedMonthlyRateNew(Integer fixedMonthlyRateNew) {
-        this.fixedMonthlyRateNew = fixedMonthlyRateNew;
+    public void setWeeklyRateNew(Integer weeklyRateNew) {
+        this.weeklyRateNew = weeklyRateNew;
     }
 }

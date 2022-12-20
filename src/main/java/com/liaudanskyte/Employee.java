@@ -17,8 +17,12 @@ public class Employee {
     public Employee() {
     }
 
-    public Double weeklySalary() {
+    public Double getWeeklySalary() {
         return Double.valueOf(getRate());
+    }
+
+    public Double getWeeklySalary(int newRate) {
+        return (double) Math.max(getRate(), newRate);
     }
 
     public String getName() {
