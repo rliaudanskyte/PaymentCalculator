@@ -1,5 +1,6 @@
-package com.liaudanskyte;
+package com.liaudanskyte.dao;
 
+import com.liaudanskyte.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,10 +18,6 @@ public class SalaryCounter {
         this.salaryLaborCodeRates = salaryLaborCodeRates;
         this.company = company;
     }
-
-//    public SalaryCounter(@Autowired SalaryLaborCodeRates salaryLaborCodeRates) {
-//        this.salaryLaborCodeRates = salaryLaborCodeRates;
-//    }
 
     public Double salaryByWeek(LocalDate dateOfPayment) {
         Double result;
@@ -42,6 +39,7 @@ public class SalaryCounter {
                     })
                     .reduce(0.0, Double::sum);
         }
+        //todo: think about a scenario with days from both years
         return result;
     }
 }

@@ -1,4 +1,4 @@
-package com.liaudanskyte;
+package com.liaudanskyte.dto;
 
 import org.springframework.stereotype.Component;
 
@@ -25,13 +25,13 @@ public class EmployeeFlexible extends Employee{
 
     @Override
     public Double getWeeklySalary() {
-        var overtime = hoursWorked - 40;
+        var overtime = hoursWorked > 40 ? hoursWorked - 40 : 0;
         return (super.getRate() * hoursWorked) + (overtime * super.getRate() * 0.5);
     }
 
     @Override
     public Double getWeeklySalary(int newRate) {
-        var overtime = hoursWorked - 40;
+        var overtime = hoursWorked > 40 ? hoursWorked - 40 : 0;
         var rateSelected = Math.max(newRate, super.getRate());
         return (rateSelected * hoursWorked) + (overtime * rateSelected * 0.5);
     }

@@ -1,4 +1,4 @@
-package com.liaudanskyte;
+package com.liaudanskyte.dto;
 
 import org.springframework.stereotype.Component;
 

@@ -1,14 +1,13 @@
 package com.liaudanskyte;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
+import com.liaudanskyte.dao.DataTransferService;
+import com.liaudanskyte.dao.SalaryCounter;
+import com.liaudanskyte.dto.Company;
+import com.liaudanskyte.dto.SalaryLaborCodeRates;
 import org.springframework.boot.SpringApplication;
-import org.springframework.context.annotation.Bean;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 public class App {
     public static void main(String[] args) throws IOException {
@@ -24,13 +23,13 @@ public class App {
         listOfEmployees.add(employeeJoan);
 
         Company company = new Company(listOfEmployees);*/
-        Company company = new Company();
+        Company company = new Company("./src/main/resources/employeeData.csv");
         SalaryCounter salaryCounter = new SalaryCounter(new SalaryLaborCodeRates(), company);
 
-        company.getEmployeeList().forEach(System.out::println);
+        company.printOutEmployeeList();
         System.out.println(salaryCounter.salaryByWeek(LocalDate.of(2021,10,10)));
         System.out.println(salaryCounter.salaryByWeek(LocalDate.of(2024,10,10)));
-        DataTransferService.writeDataLines(company.getEmployeeList());
+        DataTransferService.writeDataLines(company.getEmployeeList(), "./src/main/resources/employeeData.csv");
 
     }
 }

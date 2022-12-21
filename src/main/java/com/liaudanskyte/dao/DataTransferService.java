@@ -1,26 +1,27 @@
-package com.liaudanskyte;
+package com.liaudanskyte.dao;
 
+import com.liaudanskyte.dto.ContractType;
+import com.liaudanskyte.dto.Employee;
+import com.liaudanskyte.dto.EmployeeFlexible;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class DataTransferService {
 
-    static List<Employee> readDataLines() {
+    public static List<Employee> readDataLines(String fileUrl) {
         try {
-            var reader = new BufferedReader(new FileReader("./src/main/resources/employeeData.csv"));
+            var reader = new BufferedReader(new FileReader(fileUrl));
             return reader.lines().map(DataTransferService::convertStringToEmployee).toList();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    static Employee convertStringToEmployee(String line) {
+    public static Employee convertStringToEmployee(String line) {
         List<String> elements = Arrays.asList(line.split(","));
         if (elements.get(0).equals(ContractType.FIXED.toString())) {
             return new Employee(ContractType.valueOf(elements.get(0)), elements.get(1), Integer.valueOf(elements.get(2)));
@@ -31,8 +32,8 @@ public class DataTransferService {
         }
     }
 
-    static void writeDataLines(List<Employee> lines) throws IOException {
-        var writer = new BufferedWriter(new FileWriter("./src/main/resources/employeeData.csv"));
+    public static void writeDataLines(List<Employee> lines, String fileUrl) throws IOException {
+        var writer = new BufferedWriter(new FileWriter(fileUrl));
         lines.forEach(line -> {
             try {
                 writer.write(line + "\n");
