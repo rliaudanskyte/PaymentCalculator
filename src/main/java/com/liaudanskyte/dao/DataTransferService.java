@@ -24,9 +24,9 @@ public class DataTransferService {
     public static Employee convertStringToEmployee(String line) {
         List<String> elements = Arrays.asList(line.split(","));
         if (elements.get(0).equals(ContractType.FIXED.toString())) {
-            return new Employee(ContractType.valueOf(elements.get(0)), elements.get(1), Integer.valueOf(elements.get(2)));
+            return new Employee(ContractType.valueOf(elements.get(0)), elements.get(1), Double.valueOf(elements.get(2)));
         } else if (elements.get(0).equals(ContractType.FLEXIBLE.toString())) {
-            return new EmployeeFlexible(ContractType.valueOf(elements.get(0)), elements.get(1), Integer.parseInt(elements.get(2)), Integer.parseInt(elements.get(3)));
+            return new EmployeeFlexible(ContractType.valueOf(elements.get(0)), elements.get(1), Double.parseDouble(elements.get(2)), Integer.parseInt(elements.get(3)));
         } else {
             return new Employee();
         }

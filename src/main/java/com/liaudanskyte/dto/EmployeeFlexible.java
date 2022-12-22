@@ -6,11 +6,11 @@ import org.springframework.stereotype.Component;
 public class EmployeeFlexible extends Employee{
     private int hoursWorked;
 
-    public EmployeeFlexible(ContractType contractType, String name, Integer rate) {
+    public EmployeeFlexible(ContractType contractType, String name, Double rate) {
         super(contractType, name, rate);
     }
 
-    public EmployeeFlexible(ContractType contractType, String name, Integer rate, int hoursWorked) {
+    public EmployeeFlexible(ContractType contractType, String name, Double rate, int hoursWorked) {
         super(contractType, name, rate);
         this.hoursWorked = Math.min(hoursWorked, 60);
     }

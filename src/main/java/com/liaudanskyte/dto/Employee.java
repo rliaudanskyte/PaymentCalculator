@@ -6,9 +6,9 @@ import org.springframework.stereotype.Component;
 public class Employee {
     private String name;
     private ContractType contractType;
-    private Integer rate;
+    private Double rate;
 
-    public Employee(ContractType contractType, String name, Integer rate) {
+    public Employee(ContractType contractType, String name, Double rate) {
         this.contractType = contractType;
         this.name = name;
         this.rate = rate;
@@ -18,7 +18,7 @@ public class Employee {
     }
 
     public Double getWeeklySalary() {
-        return Double.valueOf(getRate());
+        return getRate();
     }
 
     public Double getWeeklySalary(int newRate) {
@@ -41,16 +41,16 @@ public class Employee {
         this.contractType = contractType;
     }
 
-    public Integer getRate() {
+    public Double getRate() {
         return rate;
     }
 
-    public void setRate(Integer rate) {
+    public void setRate(Double rate) {
         this.rate = rate;
     }
 
     @Override
     public String toString() {
-        return String.format("%s,%s,%d", contractType, name, rate);
+        return String.format("%s,%s,%.2f", contractType, name, rate);
     }
 }

@@ -19,6 +19,18 @@ class SalaryCounterTest {
     private LocalDate dateAfterChange = LocalDate.of(2023, 4, 21);
 
     @Test
+    void salaryByWeekBeforeChange() {
+        SalaryCounter salaryCounter = new SalaryCounter(salaryLaborCodeRates, company2);
+        assertEquals(836, salaryCounter.salaryByWeek(dateBeforeChange));
+    }
+
+    @Test
+    void salaryByWeekAfterChange() {
+        SalaryCounter salaryCounter = new SalaryCounter(salaryLaborCodeRates, company2);
+        assertEquals(921, salaryCounter.salaryByWeek(dateAfterChange));
+    }
+
+    @Test
     void salaryByWeekForSingleEmployeeBeforeChange() {
         SalaryCounter salaryCounter = new SalaryCounter(salaryLaborCodeRates, companyWithSingleEmployee);
         assertEquals(155, salaryCounter.salaryByWeek(dateBeforeChange));
