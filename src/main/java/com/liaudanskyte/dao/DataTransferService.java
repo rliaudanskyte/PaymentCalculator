@@ -28,7 +28,8 @@ public class DataTransferService {
         } else if (elements.get(0).equals(ContractType.FLEXIBLE.toString())) {
             return new EmployeeFlexible(ContractType.valueOf(elements.get(0)), elements.get(1), Double.parseDouble(elements.get(2)), Integer.parseInt(elements.get(3)));
         } else {
-            return new Employee();
+            System.out.println("Bad emplyee tipe");
+            return null;
         }
     }
 
